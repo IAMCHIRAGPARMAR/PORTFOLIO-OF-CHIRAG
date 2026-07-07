@@ -23,7 +23,7 @@ const imageUrls = [
   "/images/image copy 7.png",
   "/images/image copy 8.png",
   "/images/image copy 9.png",
-  "/images/—Pngtree—microsoft excel icon vector_3588803.png",
+  "/images/excel.png",
 ];
 const textures = imageUrls.map((url) => {
   const texture = textureLoader.load(url);
