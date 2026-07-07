@@ -27,7 +27,7 @@ const WhatIDo = () => {
   return (
     <div className="whatIDO">
       <div className="what-box">
-        <h2 className="title">
+        <h2 className="what-title">
           W<span className="hat-h2">HAT</span>
           <div>
             I<span className="do-h2"> DO</span>
@@ -87,24 +87,20 @@ const WhatIDo = () => {
             <div className="what-corner"></div>
 
             <div className="what-content-in">
-              <h3>DEVELOP</h3>
+              <h3>BUSINESS ANALYST</h3>
               <h4>Description</h4>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
-                quia aliquid laboriosam ducimus sit molestiae.
+                Bridge business and technology by translating requirements into clear, actionable solutions. Experienced across the full BA lifecycle, including stakeholder engagement, process analysis, requirements documentation, and Agile delivery support.
               </p>
               <h5>Skillset & tools</h5>
               <div className="what-content-flex">
-                <div className="what-tags">JavaScript</div>
-                <div className="what-tags">TypeScript</div>
-                <div className="what-tags">Three.js</div>
-                <div className="what-tags">React</div>
-                <div className="what-tags">Css</div>
-                <div className="what-tags">Node.js</div>
-                <div className="what-tags">Next.js</div>
-                <div className="what-tags">Express.js</div>
-                <div className="what-tags">PHP</div>
-                <div className="what-tags">MySql</div>
+                <div className="what-tags">Requirements Elicitation</div>
+                <div className="what-tags">Process Improvement</div>
+                <div className="what-tags">Stakeholder Management</div>
+                <div className="what-tags">BRDs</div>
+                <div className="what-tags">User Stories</div>
+                <div className="what-tags">Use Cases</div>
+                <div className="what-tags">Agile</div>
               </div>
               <div className="what-arrow"></div>
             </div>
@@ -128,22 +124,22 @@ const WhatIDo = () => {
             </div>
             <div className="what-corner"></div>
             <div className="what-content-in">
-              <h3>DESIGN</h3>
+              <h3>DATA ANALYST</h3>
               <h4>Description</h4>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas
-                quia aliquid laboriosam ducimus sit molestiae
+                Turn data into actionable insights that drive business decisions and operational efficiency. Skilled in building dashboards, automating reports, analyzing trends, and supporting forecasting using structured data tools.
               </p>
               <h5>Skillset & tools</h5>
               <div className="what-content-flex">
-                <div className="what-tags">Blender</div>
-                <div className="what-tags">Zbrush</div>
-                <div className="what-tags">UI Design</div>
-                <div className="what-tags">Motion</div>
-                <div className="what-tags">Rigging</div>
-                <div className="what-tags">3D Animation</div>
-                <div className="what-tags">Character Design</div>
-                <div className="what-tags">Modelling</div>
+                <div className="what-tags">Power BI</div>
+                <div className="what-tags">SQL</div>
+                <div className="what-tags">Excel/VBA</div>
+                <div className="what-tags">ArcGIS</div>
+                <div className="what-tags">Dashboarding</div>
+                <div className="what-tags">Forecasting</div>
+                <div className="what-tags">KPI Reporting</div>
+                <div className="what-tags">Data Validation</div>
+                <div className="what-tags">Predictive Analysis</div>
               </div>
               <div className="what-arrow"></div>
             </div>

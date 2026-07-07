@@ -173,9 +173,9 @@
 .landing-intro h1 {
   margin: 0;
   letter-spacing: 2px;
-  font-size: 28px;
-  line-height: 28px;
-  font-weight: 500;
+  font-size: 40px;
+  line-height: 40px;
+  font-weight: 800;
   font-family: "Geist", sans-serif;
 }
 
@@ -204,7 +204,7 @@
   margin-left: 20px;
   font-family: "Geist", sans-serif;
   font-weight: 600;
-  font-size: 32px;
+  font-size: clamp(20px, 6vw, 32px);
   line-height: 40px;
   position: relative;
   display: flex;
@@ -218,7 +218,7 @@
 }
 h2.landing-info-h2 {
   color: #c481ff;
-  font-size: 42px;
+  font-size: clamp(24px, 8vw, 42px);
   width: 120%;
   margin: 0;
   font-family: "Geist", sans-serif;
@@ -234,14 +234,15 @@ h2.landing-info-h2 {
   content: "";
   position: absolute;
   width: 100%;
-  height: 120%;
+  height: 60px;
   z-index: 3;
   background-image: linear-gradient(
     0deg,
-    var(--backgroundColor) 40%,
-    rgba(0, 0, 0, 0) 110%
+    var(--backgroundColor) 10%,
+    rgba(0, 0, 0, 0) 100%
   );
-  top: 0;
+  bottom: -10px;
+  top: auto;
   left: 0;
 }
 @media screen and (min-width: 500px) {
@@ -258,8 +259,8 @@ h2.landing-info-h2 {
     font-size: 18px;
   }
   .landing-intro h1 {
-    font-size: 30px;
-    line-height: 30px;
+    font-size: 50px;
+    line-height: 50px;
   }
   .landing-info h2 {
     font-size: 35px;
@@ -277,8 +278,8 @@ h2.landing-info-h2 {
     font-size: 25px;
   }
   .landing-intro h1 {
-    font-size: 40px;
-    line-height: 35px;
+    font-size: 65px;
+    line-height: 60px;
   }
   .landing-info h3 {
     font-size: 25px;
@@ -342,8 +343,8 @@ h2.landing-info-h2 {
     font-size: 35px;
   }
   .landing-intro h1 {
-    font-size: 60px;
-    line-height: 55px;
+    font-size: 85px;
+    line-height: 80px;
   }
   .landing-info h3 {
     font-size: 35px;

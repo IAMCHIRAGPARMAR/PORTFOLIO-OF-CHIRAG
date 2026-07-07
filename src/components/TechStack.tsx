@@ -13,16 +13,32 @@ import {
 
 const textureLoader = new THREE.TextureLoader();
 const imageUrls = [
-  "/images/react2.webp",
-  "/images/next2.webp",
-  "/images/node2.webp",
-  "/images/express.webp",
-  "/images/mongo.webp",
-  "/images/mysql.webp",
-  "/images/typescript.webp",
-  "/images/javascript.webp",
+  "/images/image.png",
+  "/images/image copy.png",
+  "/images/image copy 2.png",
+  "/images/image copy 3.png",
+  "/images/image copy 4.png",
+  "/images/image copy 5.png",
+  "/images/image copy 6.png",
+  "/images/image copy 7.png",
+  "/images/image copy 8.png",
+  "/images/image copy 9.png",
+  "/images/—Pngtree—microsoft excel icon vector_3588803.png",
 ];
-const textures = imageUrls.map((url) => textureLoader.load(url));
+const textures = imageUrls.map((url) => {
+  const texture = textureLoader.load(url);
+  
+  // Wrap exactly twice horizontally (front and back)
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.repeat.x = 2;
+  
+  // Center vertically and prevent it from stretching to the top/bottom poles
+  texture.wrapT = THREE.ClampToEdgeWrapping;
+  texture.repeat.y = 2;
+  texture.offset.y = -0.5;
+
+  return texture;
+});
 
 const sphereGeometry = new THREE.SphereGeometry(1, 28, 28);
 
@@ -166,9 +182,55 @@ const TechStack = () => {
     );
   }, []);
 
+  const tools = [
+    "Power BI (DAX)",
+    "Tableau",
+    "Advanced Excel (VBA)",
+    "SQL",
+    "SAP",
+    "Jira",
+    "Lucidchart",
+    "MS Visio",
+    "Jama",
+    "ArcGIS",
+    "MS Office Suite"
+  ];
+
   return (
-    <div className="techstack">
-      <h2> My Techstack</h2>
+    <div className="techstack" style={{ position: "relative" }}>
+      <h2>Analytics & Tools</h2>
+      
+      <div style={{
+        position: "absolute",
+        top: "40%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "15px",
+        justifyContent: "center",
+        maxWidth: "800px",
+        width: "100%",
+        padding: "0 20px",
+        zIndex: 10,
+        pointerEvents: "none"
+      }}>
+        {tools.map((tool, index) => (
+          <div key={index} style={{
+            padding: "10px 20px",
+            fontSize: "1.1rem",
+            fontWeight: 400,
+            backgroundColor: "rgba(0, 0, 0, 0.4)",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
+            borderRadius: "30px",
+            backdropFilter: "blur(10px)",
+            color: "#fff",
+            letterSpacing: "0.5px"
+          }}>
+            {tool}
+          </div>
+        ))}
+      </div>
 
       <Canvas
         shadows

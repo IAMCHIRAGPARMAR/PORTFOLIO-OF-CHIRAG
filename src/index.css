@@ -41,6 +41,35 @@ a {
 a:hover {
   color: var(--accentColor);
 }
+.canvas-wrapper {
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}
+.canvas-wrapper.loaded {
+  opacity: 1;
+}
+
+.what-box h2,
+.work-title-main h2,
+.career-section h2,
+.contact-box h2,
+.techstack h2 {
+  background: linear-gradient(0deg, #7f40ff, #ffffff) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+}
+
+.text-gradient {
+  background: linear-gradient(0deg, #7f40ff, #ffffff) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  display: inline-block;
+}
+
 main {
   opacity: 1;
   transition: 0.3s;
@@ -96,7 +125,7 @@ body {
   position: relative;
   height: var(--vh);
   margin: auto;
-  margin-top: 50px;
+  margin-top: 200px;
   margin-bottom: -100px;
 }
 

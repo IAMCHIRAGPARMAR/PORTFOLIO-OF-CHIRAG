@@ -16,21 +16,16 @@ const setCharacter = (
   const loadCharacter = () => {
     return new Promise<GLTF | null>(async (resolve, reject) => {
       try {
-        const encryptedBlob = await decryptFile(
-          "/models/character.enc",
-          "Character3D#@"
-        );
-        const blobUrl = URL.createObjectURL(new Blob([encryptedBlob]));
-
         let character: THREE.Object3D;
         loader.load(
-          blobUrl,
+          "/models/character.glb",
           async (gltf) => {
             character = gltf.scene;
             await renderer.compileAsync(character, camera, scene);
             character.traverse((child: any) => {
               if (child.isMesh) {
                 const mesh = child as THREE.Mesh;
+                console.log("Mesh:", mesh.name, "visible:", mesh.visible, "material:", mesh.material ? (mesh.material as any).name || mesh.material : "none");
                 child.castShadow = true;
                 child.receiveShadow = true;
                 mesh.frustumCulled = true;

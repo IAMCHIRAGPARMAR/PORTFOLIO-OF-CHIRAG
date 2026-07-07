@@ -24,6 +24,10 @@
   font-weight: 600;
   margin-right: 10%;
   margin-bottom: 100px;
+  color: white;
+  opacity: 1 !important;
+  z-index: 99;
+  position: relative;
 }
 
 .hat-h2 {
@@ -37,7 +41,7 @@
   height: 500px;
   margin-left: 200px;
   position: relative;
-  display: none;
+  display: flex;
 }
 .what-content {
   width: 450px;
@@ -52,14 +56,14 @@
 
 .what-noTouch:hover,
 .what-content-active {
-  min-height: 67%;
+  min-height: 75%;
   padding: 40px 50px;
 }
 
 .what-noTouch:hover ~ .what-content,
 .what-box-in:hover .what-noTouch:not(:hover),
 .what-content.what-sibling {
-  min-height: 33%;
+  min-height: 25%;
   padding: 10px 50px;
 }
 .what-content h3 {
@@ -206,7 +210,13 @@
 }
 .what-content-in {
   height: 100%;
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.what-content-in::-webkit-scrollbar {
+  display: none;
 }
 .what-content-in h5 {
   font-weight: 300;
