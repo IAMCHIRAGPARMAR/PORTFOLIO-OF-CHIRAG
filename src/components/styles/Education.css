@@ -1,0 +1,115 @@
+.education-section {
+  padding-top: 100px;
+  padding-bottom: 100px;
+  box-sizing: border-box;
+  width: var(--cWidth);
+  margin: auto;
+  position: relative;
+  z-index: 5;
+}
+
+.education-title-main {
+  width: 100%;
+  text-align: center;
+}
+
+.education-title-main h2 {
+  margin-top: 0;
+  font-size: 70px;
+  font-weight: 500;
+  margin-bottom: 40px;
+  color: #fff;
+  text-align: center;
+}
+.education-title-main h2 > span {
+  color: var(--accentColor, #fb8dff);
+}
+
+.education-container {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  align-content: stretch;
+  justify-content: center;
+  width: 100%;
+}
+
+.education-flex {
+  width: 100%;
+  display: flex;
+  height: auto;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-left: 20px;
+  padding-right: 20px;
+  position: relative;
+  gap: 50px;
+}
+
+.edu-card {
+  padding: 35px;
+  display: flex;
+  flex-direction: column;
+  width: 550px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  gap: 25px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.edu-card:hover,
+.edu-card:active {
+  border-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 40px rgba(251, 141, 255, 0.15);
+}
+
+.edu-details {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  row-gap: 20px;
+  column-gap: 15px;
+}
+
+.edu-detail-row {
+  display: contents;
+}
+
+.edu-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accentColor, #fb8dff);
+  letter-spacing: 0.5px;
+  align-self: start;
+}
+
+.edu-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+@media only screen and (max-height: 900px) {
+  .edu-card {
+    padding: 25px;
+    width: 480px;
+    gap: 20px;
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  .edu-card {
+    width: 450px;
+  }
+}
+
+@media only screen and (max-width: 1025px) {
+  .education-flex {
+    height: auto;
+  }
+}

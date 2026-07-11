@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import "./styles/Work.css";
 import CaseStudyModal, { ProjectData } from "./CaseStudyModal";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const projects: ProjectData[] = [
   {
@@ -122,13 +124,146 @@ const projects: ProjectData[] = [
     resources: [
       { label: "View Documents", url: "https://drive.google.com/drive/folders/101uMmqEDVGxVMtDgxeDomiXBr7xr6zrC?usp=sharing" }
     ]
+  },
+  {
+    name: "Charlie AI",
+    category: "Independent Project — Full-Stack AI Business Analyst Assistant",
+    tools: "Next.js · Supabase · TypeScript · Framer Motion · Vercel · GitHub",
+    problem: "Business analysts often need a quick, conversational way to think through requirement gathering, RACI matrices, process mapping, and stakeholder analysis — without digging through templates each time.",
+    approach: "Built with Next.js 16, React 19, and TypeScript. Supabase handles authentication and a PostgreSQL database with Row Level Security for persistent chat sessions and artifacts. AI responses stream in real time and render full markdown, including tables and syntax-highlighted code. Includes a split-screen artifact viewer, a complete light/dark theme system, and glassmorphic UI styling with Framer Motion and GSAP animations.",
+    finding: "Heavy dependencies like recharts are lazy-loaded only when an artifact is opened, keeping initial load fast. The codebase was audited to remove unused packages and dead code.",
+    outcome: "Shipped and deployed independently, end-to-end — from database schema and RLS design to a working, publicly accessible production app.",
+    coverImage: "/images/case-studies/project-4-charlie-ai/1.png",
+    storyTitle: "The Story: Building the Assistant I Wished I Had",
+    story: (
+      <>
+        <p>Every BA project starts the same way: a blank page and a dozen questions. Who's Accountable versus Consulted on this? What actually belongs in scope? How do I structure a BRD so a stakeholder with five minutes and a developer with five hours both get what they need from it? I'd answered these questions enough times across my internship and coursework that I started wondering if the answers could live somewhere more useful than my own memory, somewhere conversational, somewhere I could point a friend or a future version of myself toward.</p>
+        <p>So I built Charlie AI, a full-stack Next.js application that acts as a conversational business analyst. No templates to dig through, no scrolling past irrelevant sections. Just ask about a RACI matrix, a process flow, or a BRD structure, and get walked through the thinking in real time.</p>
+        <p>The technical build mattered as much to me as the concept. I wanted this to demonstrate real full-stack ownership, not just a chatbot wrapper. I designed the PostgreSQL schema and Row Level Security policies in Supabase myself, so every user's chat history stays private by architecture, not by convention. I wired up authentication, built a streaming chat interface that renders responses in real time with full markdown support, and added a split-screen artifact viewer so generated content doesn't have to compete with the conversation for space. Along the way I hit the same walls anyone building solo hits, including a theme system that half-worked, chat bubbles that were unreadable against an animated background, and a loading screen that wouldn't unmount. I fixed each one deliberately rather than papering over it.</p>
+        <p>What I ended up with isn't a commercial product. It's a working, publicly deployed application built entirely on my own, from database design to production deployment on Vercel. It's the project I point to when I want to show, not just tell, that I can carry an idea from a rough sketch to something real people can actually use.</p>
+      </>
+    ),
+    screenshots: [
+      "/images/case-studies/project-4-charlie-ai/1.png",
+      "/images/case-studies/project-4-charlie-ai/2.png"
+    ],
+    resources: [
+      { label: "View Website", url: "https://charlie-ai-bwuz.vercel.app/" }
+    ]
   }
 ];
 
 const Work = () => {
   const [activeGalleryIndex, setActiveGalleryIndex] = useState<number | null>(null);
+  const [activeProjectIndex, setActiveProjectIndex] = useState<number>(0);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState<'start' | 'middle' | 'end'>('start');
+  
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const scrollReqRef = useRef<number | null>(null);
 
-  // Horizontal scrolling removed per user request
+  useGSAP(() => {
+    const cards = projectRefs.current.filter(Boolean);
+    if (cards.length > 0) {
+      gsap.fromTo(
+        cards,
+        { x: 100, opacity: 0 },
+        {
+          x: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power3.out",
+          stagger: 0.15,
+          scrollTrigger: {
+            trigger: scrollContainerRef.current,
+            start: "top 85%",
+          }
+        }
+      );
+    }
+  }, { scope: scrollContainerRef });
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = Number(entry.target.getAttribute("data-index"));
+            setActiveProjectIndex(index);
+          }
+        });
+      },
+      { 
+        root: scrollContainerRef.current,
+        rootMargin: "0px -50% 0px -50%", 
+        threshold: 0 
+      }
+    );
+
+    projectRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const scrollToProject = (index: number) => {
+    const el = projectRefs.current[index];
+    const container = scrollContainerRef.current;
+    
+    if (el && container) {
+      const scrollLeftPos = el.offsetLeft - 40; 
+      container.scrollTo({ left: scrollLeftPos, behavior: "smooth" });
+    }
+    setIsDropdownOpen(false);
+  };
+
+  const handleScroll = () => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      const { scrollLeft, scrollWidth, clientWidth } = container;
+      if (scrollLeft <= 10) {
+        setScrollPosition('start');
+      } else if (scrollLeft + clientWidth >= scrollWidth - 10) {
+        setScrollPosition('end');
+      } else {
+        setScrollPosition('middle');
+      }
+    }
+  };
+
+  const scrollLeftBtn = () => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      const cardWidth = container.querySelector('.cs-card')?.clientWidth || 420;
+      container.scrollBy({ left: -(cardWidth + 30), behavior: 'smooth' });
+    }
+  };
+
+  const scrollRightBtn = () => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      const cardWidth = container.querySelector('.cs-card')?.clientWidth || 420;
+      container.scrollBy({ left: cardWidth + 30, behavior: 'smooth' });
+    }
+  };
+
+  const startAutoScroll = () => {
+    const scrollStep = () => {
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollLeft += 1;
+      }
+      scrollReqRef.current = requestAnimationFrame(scrollStep);
+    };
+    scrollReqRef.current = requestAnimationFrame(scrollStep);
+  };
+
+  const stopAutoScroll = () => {
+    if (scrollReqRef.current) {
+      cancelAnimationFrame(scrollReqRef.current);
+    }
+  };
 
   const openGallery = (index: number) => {
     setActiveGalleryIndex(index);
@@ -142,16 +277,68 @@ const Work = () => {
     <>
       <div className="work-section" id="work">
         <div className="work-container">
-          <div className="work-title-main">
-            <h2>
-              My <span>Work</span>
-            </h2>
+          <div className="work-header">
+            <div className="work-title-main">
+              <h2>
+                My <span>Work</span>
+              </h2>
+            </div>
+            
+            <div className="work-dropdown-container">
+              <button 
+                className="work-dropdown-trigger"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                aria-haspopup="listbox"
+                aria-expanded={isDropdownOpen}
+              >
+                Jump to project {isDropdownOpen ? '▴' : '▾'}
+              </button>
+              
+              <ul className={`work-dropdown-menu ${isDropdownOpen ? 'open' : ''}`} role="listbox">
+                {projects.map((proj, i) => (
+                  <li 
+                    key={i} 
+                    className={`work-dropdown-item ${i === activeProjectIndex ? 'active' : ''}`}
+                    onClick={() => scrollToProject(i)}
+                    role="option"
+                    aria-selected={i === activeProjectIndex}
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        scrollToProject(i);
+                      }
+                    }}
+                  >
+                    {proj.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div className="work-flex">
-            {projects.map((project, index) => (
+          
+          <div className="work-scroll-wrapper">
+            {scrollPosition !== 'start' && (
+              <button className="work-scroll-arrow left" onClick={scrollLeftBtn} aria-label="Scroll left">
+                <LuChevronLeft size={28} />
+              </button>
+            )}
+
+            <div 
+              className="work-flex" 
+              ref={scrollContainerRef}
+              onMouseEnter={startAutoScroll}
+              onMouseLeave={stopAutoScroll}
+              onTouchStart={stopAutoScroll}
+              onScroll={handleScroll}
+            >
+              {projects.map((project, index) => (
               <div 
                 className="cs-card" 
-                key={index} 
+                key={index}
+                id={`project-${index}`}
+                data-index={index}
+                ref={(el) => { projectRefs.current[index] = el; }}
                 onClick={() => openGallery(index)}
               >
                 {/* Cover Image Container */}
@@ -184,10 +371,12 @@ const Work = () => {
                       <div className="cs-text">{project.finding}</div>
                     </div>
                   )}
-                  <div className="cs-detail-row">
-                    <div className="cs-label">Outcome</div>
-                    <div className="cs-text">{project.outcome}</div>
-                  </div>
+                  {project.outcome && (
+                    <div className="cs-detail-row">
+                      <div className="cs-label">Outcome</div>
+                      <div className="cs-text">{project.outcome}</div>
+                    </div>
+                  )}
                 </div>
 
                 {project.disclaimer && (
@@ -200,13 +389,21 @@ const Work = () => {
                 <div className="cs-tags">
                   {project.tools}
                 </div>
+                {/* END DISCLAIMER/TAGS */}
               </div>
             ))}
           </div>
+
+          {scrollPosition !== 'end' && (
+            <button className="work-scroll-arrow right" onClick={scrollRightBtn} aria-label="Scroll right">
+              <LuChevronRight size={28} />
+            </button>
+          )}
         </div>
       </div>
+    </div>
 
-      <CaseStudyModal 
+    <CaseStudyModal 
         isOpen={activeGalleryIndex !== null}
         onClose={closeGallery}
         project={activeGalleryIndex !== null ? projects[activeGalleryIndex] : null}
